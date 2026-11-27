@@ -72,7 +72,7 @@ Copy-Item "$skill\error-code-registry.md" docs\error-codes.md
 Copy-Item "$skill\degradation-matrix.md"  docs\
 ```
 
-检查器不复制:直接从 submodule 调用,项目里只留一个几十字节的转发脚本即可(见第 5 节)。
+检查器不复制:直接从 submodule 调用(见第 5 节)。
 
 其余模板按需:`threat-model.md`、`release-checklist.md`、`runbook-template.md`、`postmortem-template.md`、`adr-template.md`。完整清单见 `assets/new-project-checklist.md`。
 
@@ -119,20 +119,7 @@ REPORT_ONLY=1 sh .opencode/skills/cpp-enterprise/assets/check-platform.sh .
 REQUIRE_SENTINEL=1 sh .opencode/skills/cpp-enterprise/assets/check-platform.sh .
 ```
 
-想让命令稳定、不写长路径,在项目里放转发脚本(三行,不是副本):
-
-```powershell
-# scripts/check-platform.ps1
-$checker = Join-Path $PSScriptRoot '..\.opencode\skills\cpp-enterprise\assets\check-platform.ps1'
-& $checker @args
-exit $LASTEXITCODE
-```
-
-```sh
-# scripts/check-platform.sh
-#!/usr/bin/env sh
-exec sh "$(dirname "$0")/../.opencode/skills/cpp-enterprise/assets/check-platform.sh" "$@"
-```
+想让命令稳定、不写长路径,加一个 CMake 变量或 shell alias 即可;**不要把检查器复制进项目**,否则又会漂移。
 
 输出格式 `文件:行: 规则`,可直接定位。检查器自身有自测:`assets/selftest-check-platform.ps1|sh`,8 个正反例。
 
