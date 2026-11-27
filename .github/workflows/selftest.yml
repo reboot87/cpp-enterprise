@@ -1,0 +1,25 @@
+name: selftest
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checker:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: sh syntax
+        if: runner.os == 'Linux'
+        run: bash -n assets/check-platform.sh assets/selftest-check-platform.sh
+      - name: sh self-test
+        if: runner.os == 'Linux'
+        run: sh assets/selftest-check-platform.sh
+      - name: PowerShell self-test
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./assets/selftest-check-platform.ps1

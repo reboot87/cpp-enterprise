@@ -10,6 +10,7 @@
   - `powershell -NoProfile -ExecutionPolicy Bypass -File assets/selftest-check-platform.ps1`
   - `sh assets/selftest-check-platform.sh`
 - 脚本语法:`bash -n assets/check-platform.sh`
+- CI:`.github/workflows/selftest.yml`(ubuntu + windows),跑上述自测与 `bash -n`
 - 文档链接与版本一致性:仓库外脚本 `E:\aiwork\cpp-enterprise-validation\validate.ps1`
 - 静态检查:`assets/clang-format`、`assets/clang-tidy` 是发给项目的基线,不是本仓库的执行配置
 
@@ -33,11 +34,11 @@
 
 ## 已知差距
 
-1. 无 CI:自测、链接检查、脚本语法检查均靠人工执行。
+1. CI 只跑检查器自测与 `bash -n`,不跑文档链接检查,也不构建任何工程。
 2. 本机未安装 `clang-format`/`clang-tidy`,两份基线配置未实际运行过。
-3. `assets/check-platform.sh` 仅在 WSL 上通过自测,未在真实 Linux/macOS CI 验证。
+3. `assets/check-platform.sh` 仅在 WSL 上通过自测,未在真实 Linux/macOS CI 验证(macOS 仍未覆盖)。
 4. 链接与版本一致性检查在仓库外的验证工程里,未入库。
-5. 无 `README.md`、`LICENSE`:对外可见,但不说明安装方式与授权。
+5. 无 `LICENSE`:对外可见,但不说明授权范围。
 6. 检查器是文本启发式,不解析 C++ 语法;宏出现在字符串或注释中会误报。
 7. 含中文的 `.ps1` 必须带 UTF-8 BOM,否则 Windows PowerShell 5.1 报语法错误;复制资产时容易丢 BOM。
 
