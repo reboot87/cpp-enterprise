@@ -1,0 +1,24 @@
+# .gitattributes 基线。复制为仓库根目录 .gitattributes,避免跨平台换行噪音。
+* text=auto eol=lf
+
+# Windows 工具链与脚本保留 CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.sln text eol=crlf
+*.vcxproj text eol=crlf
+*.vcxproj.filters text eol=crlf
+
+# 二进制,禁止自动换行与 diff
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.zip binary
+*.7z binary
+*.pdf binary
+*.o binary
+*.obj binary
+*.lib binary
+*.dll binary
+*.exe binary
